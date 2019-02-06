@@ -31,11 +31,11 @@ public class Term extends TermElement{
 
     @Override
     public String toString(){
-        String ret = "";
+        String ret = "(";
         for(TermElement el : termElements){
             ret += el.toString();
         }
-        return ret;
+        return ret + ")";
     }
 
     //Private Methods
@@ -51,6 +51,11 @@ public class Term extends TermElement{
             if(HelperClass.isNumber(curString)){
                 for(int a = ++i; a < termLen; a++, i++){
                     cur = term.charAt(a);
+                    if(cur == '.' || cur == ','){
+                        i++; a++;
+                        curString += ".";
+                        cur = term.charAt(a);
+                    }
                     if(HelperClass.isNumber(curString + cur)){
                         curString += cur;
                     }else
@@ -111,22 +116,27 @@ public class Term extends TermElement{
         //Iterate over all termElements to shorter them
         ArrayList<TermElement> combineElements = new ArrayList<>();
         int startIndex = 0;
-        for(TermElement curEl : termElements){
+        for(int i = 0; i < termElements.size(); i++){
+            TermElement curEl = termElements.get(i);
             if(curEl.getType() == TermElementType.TERM_ELEMENT_OPERATOR &&
                     (((TermOperator)curEl).getOperatorType() == TermOperatorType.TERM_OPERATOR_TYPE_MULTIPLICATION ||
                             ((TermOperator)curEl).getOperatorType() == TermOperatorType.TERM_OPERATOR_TYPE_DIVISION )) {
-                int index = termElements.indexOf(curEl);
                 if(combineElements.size() == 0) {
-                    startIndex = index -1;
+                    startIndex = i -1;
                     combineElements.add(termElements.get(startIndex));
                     termElements.remove(termElements.get(startIndex));
+                    i--;
                 }
                 combineElements.add(curEl);
                 termElements.remove(curEl);
                 combineElements.add(termElements.get(startIndex));
+
+                if(termElements.get(startIndex).getType() == TermElementType.TERM_ELEMENT_OPERATOR){
+                    combineElements.add(termElements.get(startIndex+1));
+                    termElements.remove(termElements.get(startIndex+1));
+                }
                 termElements.remove(termElements.get(startIndex));
-                if(startIndex == termElements.size())
-                    break;
+                i--;
             }else if (combineElements.size() > 0){
                 termElements.add(startIndex, new Term(new ArrayList<TermElement>(combineElements)));
                 combineElements.clear();
