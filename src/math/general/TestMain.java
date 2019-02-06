@@ -1,12 +1,13 @@
 package math.general;
 
+import math.general.TermElements.Term;
 import math.general.TermElements.TermElement;
 
 import java.util.ArrayList;
 
 public class TestMain {
     public static void main(String[] args){
-        Function f = new Function("x*sin(x+(-7)+-45)", "x");
-        ArrayList<TermElement> elements = f.getTermElements();
+        Term term = new Term("3+3*7*9");
+        System.out.println(term.toString());
     }
 }
