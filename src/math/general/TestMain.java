@@ -1,5 +1,7 @@
 package math.general;
 
+import math.general.TermElements.TermElement;
+
 import java.util.ArrayList;
 
 public class TestMain {

@@ -1,9 +1,9 @@
 package math.calculation;
 
 import math.general.Function;
-import math.general.TermElement;
-import math.general.TermElementType;
-import math.general.TermFunction;
+import math.general.TermElements.TermElement;
+import math.general.TermElements.TermElementType;
+import math.general.TermElements.TermFunction;
 
 import java.util.ArrayList;
 

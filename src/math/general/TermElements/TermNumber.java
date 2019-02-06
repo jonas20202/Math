@@ -1,4 +1,4 @@
-package math.general;
+package math.general.TermElements;
 
 public class TermNumber extends TermElement {
     private double number;

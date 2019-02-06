@@ -1,4 +1,4 @@
-package math.general;
+package math.general.TermElements;
 
 public class TermUnknown extends TermElement{
 

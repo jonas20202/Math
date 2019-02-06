@@ -1,4 +1,6 @@
-package math.general;
+package math.general.TermElements;
+
+import math.general.Function;
 
 public class TermFunction extends TermElement {
     private String operator;

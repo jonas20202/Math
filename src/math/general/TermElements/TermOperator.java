@@ -1,4 +1,4 @@
-package math.general;
+package math.general.TermElements;
 
 public class TermOperator extends TermElement {
     private char operator;

@@ -1,6 +1,7 @@
 package math.general;
 
 import math.calculation.DerivateTerm;
+import math.general.TermElements.*;
 
 import java.util.ArrayList;
 
