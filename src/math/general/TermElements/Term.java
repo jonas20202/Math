@@ -25,17 +25,31 @@ public class Term extends TermElement{
     }
 
     @Override
-    public TermElement getDerivation(){
-        return null;
-    }
-
-    @Override
     public String toString(){
         String ret = "(";
         for(TermElement el : termElements){
             ret += el.toString();
         }
         return ret + ")";
+    }
+
+    public double calc(){
+        calcTerm();
+        return ((TermNumber)termElements.get(0)).getNumber();
+    }
+
+    public boolean hasUnknown(){
+        for(TermElement curEl : termElements){
+            if(curEl.getType() == TermElementType.TERM_ELEMENT_UNKNOWN)
+                return true;
+
+            if(curEl.getType() == TermElementType.TERM_ELEMENT_TERM){
+                Term curTerm = (Term)curEl;
+                if(curTerm.hasUnknown())
+                    return true;
+            }
+        }
+        return false;
     }
 
     //Private Methods
@@ -145,6 +159,46 @@ public class Term extends TermElement{
         if (combineElements.size() > 0) {
             termElements.add(startIndex, new Term(new ArrayList<TermElement>(combineElements)));
             combineElements.clear();
+        }
+    }
+
+    private void cancelTerm(){
+
+    }
+
+
+    private void calcTerm(){
+        for(int i = 0; i < termElements.size(); i++){
+            TermElement curEl = termElements.get(i);
+            if(curEl.getType() == TermElementType.TERM_ELEMENT_OPERATOR){
+                TermOperator curOperator = (TermOperator) curEl;
+
+                if(curOperator.getOperatorType() == TermOperatorType.TERM_OPERATOR_TYPE_PLUS ||
+                curOperator.getOperatorType() == TermOperatorType.TERM_OPERATOR_TYPE_MINUS ||
+                curOperator.getOperatorType() == TermOperatorType.TERM_OPERATOR_TYPE_MULTIPLICATION ||
+                curOperator.getOperatorType() == TermOperatorType.TERM_OPERATOR_TYPE_DIVISION) {
+
+                    TermElement prevEl = termElements.get(i - 1);
+                    TermElement nextEl = termElements.get(i + 1);
+
+                    if (prevEl.getType() == TermElementType.TERM_ELEMENT_TERM){
+                        Term prevTerm = (Term)prevEl;
+                        prevEl = new TermNumber(Double.toString(prevTerm.calc()));
+                    }
+                    if (nextEl.getType() == TermElementType.TERM_ELEMENT_TERM){
+                        Term nextTerm = (Term)nextEl;
+                        nextEl = new TermNumber(Double.toString(nextTerm.calc()));
+                    }
+
+                    TermNumber erg = HelperClass.calc((TermNumber) prevEl, curOperator,(TermNumber) nextEl);
+                    termElements.remove(i-1);
+                    termElements.remove(i-1);
+                    termElements.remove(i-1);
+                    termElements.add(i-1, erg);
+                    i--;
+                }
+            }
+
         }
     }
 }

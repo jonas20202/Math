@@ -1,5 +1,8 @@
 package math.general;
 
+import math.general.TermElements.TermNumber;
+import math.general.TermElements.TermOperator;
+
 public class HelperClass {
     public static boolean isNumber(String check){
         int termLen = check.length();
@@ -62,5 +65,18 @@ public class HelperClass {
                 return i;
         }
         return -1;
+    }
+
+    public static TermNumber calc(TermNumber prev, TermOperator operator, TermNumber next){
+        double erg = 0;
+        switch (operator.getOperatorType()){
+            case TERM_OPERATOR_TYPE_PLUS: erg = prev.getNumber() + next.getNumber(); break;
+            case TERM_OPERATOR_TYPE_MINUS: erg = prev.getNumber() - next.getNumber();break;
+            case TERM_OPERATOR_TYPE_MULTIPLICATION: erg = prev.getNumber() * next.getNumber();break;
+            case TERM_OPERATOR_TYPE_DIVISION: erg = prev.getNumber() / next.getNumber();break;
+            case TERM_OPERATOR_TYPE_POWER: erg = Math.pow(prev.getNumber(), next.getNumber());break;
+        }
+
+        return new TermNumber(Double.toString(erg));
     }
 }

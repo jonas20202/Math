@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public class TestMain {
     public static void main(String[] args){
-        Term term = new Term("(3+3)*sin(8+9*78)*34+6");
+        Term term = new Term("2*4+3*2+5*5*2");
+        System.out.println(term.toString());
+        term.calc();
         System.out.println(term.toString());
     }
 }

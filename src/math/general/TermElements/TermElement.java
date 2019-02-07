@@ -9,5 +9,4 @@ public abstract class TermElement {
 
     //Public Methods
     public abstract TermElementType getType();
-    public abstract TermElement getDerivation();
 }

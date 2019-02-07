@@ -29,17 +29,15 @@ public class TermOperator extends TermElement {
             case "log":
                 operatorType = TermOperatorType.TERM_OPERATOR_TYPE_LOG;
                 break;
+            case "^":
+                operatorType = TermOperatorType.TERM_OPERATOR_TYPE_POWER;
+                break;
         }
     }
 
     @Override
     public TermElementType getType() {
         return TermElementType.TERM_ELEMENT_OPERATOR;
-    }
-
-    @Override
-    public TermElement getDerivation() {
-        return null;
     }
 
     @Override
@@ -61,6 +59,8 @@ public class TermOperator extends TermElement {
                 return " tan ";
             case TERM_OPERATOR_TYPE_LOG:
                 return " log ";
+            case TERM_OPERATOR_TYPE_POWER:
+                return " ^ ";
         }
         return "OPERATOR ERROR";
     }
